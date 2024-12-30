@@ -8,7 +8,7 @@ import MenuItemLink from './menuLinks';
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from '../glo/themeswitcher/themeSwiter';
 
-const Navbar: React.FC = () => {
+const  Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
   return (
     <Disclosure as="nav" className="bg-gray-900 dark:bg-black shadow-md">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
+        <div className="relative flex  items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <DisclosureButton
               onClick={handleMenuToggle}

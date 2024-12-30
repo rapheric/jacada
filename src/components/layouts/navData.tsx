@@ -7,11 +7,12 @@ export interface NavigationItem {
   
   export const navigation: NavigationItem[] = [
     { name: 'JACADA VPN', href: '/', current: true },
-    { name: 'VPN Protocols', href: '/vpn-protocol', current: false },
+    // { name: 'VPN Protocols', href: '/vpn-protocol', current: false },
     { name: 'VPNs', href: '/vpns', current: false },
-    { name: 'Create VPN', href: '/vpns/create', current: false },
-    { name: 'Edit-VPN', href: '/vpns/edit/:id', current: false },
-    // { name: 'Get Started', href: '/sign-up', current: false },
+    { name: 'Create VPN', href: '/', current: false },
+    { name: 'Edit-VPN', href: '/vpn-peers', current: false },
+    { name: 'Set Up key', href: '/control', current: false },
+    { name: 'acess', href: '/access-control', current: false },
   ];
   
   export const profileMenuItems = [

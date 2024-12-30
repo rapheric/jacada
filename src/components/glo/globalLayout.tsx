@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Navbar from "../layouts/navbar";
+// import Navbar from "../layouts/navbar";
 import Footer from "../layouts/footer";
+import Header from "../../api/Global/components/navbar";
 
 
 const GlobalLayout = () => {
@@ -11,7 +12,7 @@ const GlobalLayout = () => {
 
   return (
     <>
-      {!shouldHideLayout && <Navbar />}
+      {!shouldHideLayout && <Header />}
       <main>
         <Outlet />
       </main>
