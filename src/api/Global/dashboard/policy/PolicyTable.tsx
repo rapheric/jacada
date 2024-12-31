@@ -1,6 +1,4 @@
-import React from "react";
-import { Table, Button, Space } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+
 
 interface Policy {
   key: string;
@@ -29,69 +27,72 @@ const PolicyTable: React.FC<Props> = ({
   handleEditPolicy,
   handleDeletePolicy,
 }) => {
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Active',
-      dataIndex: 'active',
-      key: 'active',
-      render: (active: boolean) => (active ? 'Yes' : 'No'),
-    },
-    {
-      title: 'Sources',
-      dataIndex: 'sources',
-      key: 'sources',
-    },
-    {
-      title: 'Direction',
-      dataIndex: 'direction',
-      key: 'direction',
-      render: (direction: string) => (
-        <span>{direction === 'Inbound' ? '← Inbound' : '→ Outbound'}</span>
-      ),
-    },
-    {
-      title: 'Destinations',
-      dataIndex: 'destinations',
-      key: 'destinations',
-    },
-    {
-      title: 'Protocol',
-      dataIndex: 'protocol',
-      key: 'protocol',
-    },
-    {
-      title: 'Ports',
-      dataIndex: 'ports',
-      key: 'ports',
-    },
-    {
-      title: 'Posture Choices',
-      dataIndex: 'posture',
-      key: 'posture',
-    },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (_: any, record: Policy) => (
-        <Space size="middle">
-          <Button icon={<EditOutlined />} onClick={() => handleEditPolicy(record)} />
-          <Button icon={<DeleteOutlined />} onClick={() => handleDeletePolicy(record)} />
-        </Space>
-      ),
-    },
-  ];
+  const filteredPolicies = policies.filter((policy) =>
+    policy.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const paginatedPolicies = showTenRows ? filteredPolicies.slice(0, 10) : filteredPolicies;
 
   return (
-    <Table
-      columns={columns}
-      dataSource={policies.filter(policy => policy.name.toLowerCase().includes(searchQuery.toLowerCase()))}
-      pagination={showTenRows ? { pageSize: 10 } : false}
-    />
+    <div className="overflow-x-auto bg-gray-900 rounded-lg p-4">
+      <table className="min-w-full bg-gray-900 text-white">
+        <thead>
+          <tr>
+            <th className="p-2 text-left">Name</th>
+            <th className="p-2 text-left">Active</th>
+            <th className="p-2 text-left">Sources</th>
+            <th className="p-2 text-left">Direction</th>
+            <th className="p-2 text-left">Destinations</th>
+            <th className="p-2 text-left">Protocol</th>
+            <th className="p-2 text-left">Ports</th>
+            <th className="p-2 text-left">Posture Choices</th>
+            <th className="p-2 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paginatedPolicies.map((policy) => (
+            <tr key={policy.key} className="border-t border-gray-600">
+              <td className="p-3">{policy.name}</td>
+              <td className="p-2">
+                <span className={policy.active ? "text-green-400" : "text-red-500"}>
+                  {policy.active ? "Yes" : "No"}
+                </span>
+              </td>
+              <td className="p-2">{policy.sources}</td>
+              <td className="p-2">{policy.direction === "Inbound" ? "← Inbound" : "→ Outbound"}</td>
+              <td className="p-2">{policy.destinations}</td>
+              <td className="p-2">{policy.protocol}</td>
+              <td className="p-2">{policy.ports}</td>
+              <td className="p-2">{policy.posture}</td>
+              <td className="p-2 flex space-x-2">
+                <button
+                  className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-500"
+                  onClick={() => handleEditPolicy(policy)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500"
+                  onClick={() => handleDeletePolicy(policy)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {showTenRows && filteredPolicies.length > 10 && (
+        <div className="flex justify-center mt-4">
+          <button
+            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-500"
+            onClick={() => alert("Show more functionality can be added")}
+          >
+            Show More
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

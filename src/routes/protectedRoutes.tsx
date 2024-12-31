@@ -33,6 +33,7 @@ import AccessCo from "../api/Global/dashboard/cont";
 import Lay from "../components/layouts/dash/Lay";
 import SetupKeysDrawer from "../api/Global/dashboard/keyDrawer";
 import Policy from "../api/Global/dashboard/policy/policy";
+import SetupKeyUI from "../api/Global/dashboard/setUpKeyUI/setUpKeyUI";
 // import PeersPage from "../pages/vpn/peerspage";
 
 const AppRoutes = () => (
@@ -43,6 +44,7 @@ const AppRoutes = () => (
       <Route path="/sign-up" element={<Signup />} />
       <Route path="/lay" element={<Lay />} />
       <Route path="/key-drawer" element={<SetupKeysDrawer />} />
+      <Route path="/key" element={<SetupKeyUI />} />
       <Route path="/landing" element={<SecureAccessUI/>} />
       <Route path="/step-two-section" element={<StepSection/>} />
       <Route path="/step-one-section" element={<StepOneSection/>} />

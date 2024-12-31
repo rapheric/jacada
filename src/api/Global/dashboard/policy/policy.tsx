@@ -1,5 +1,4 @@
 
-// export default Policy;
 import React, { useState } from "react";
 import { Layout, Typography } from "antd";
 import DeleteDrawer from "./DeleteDrawer";
@@ -13,26 +12,26 @@ const { Title, Paragraph } = Typography;
 const Policy: React.FC = () => {
   const [policies, setPolicies] = useState([
     {
-      key: '1',
-      name: 'Policy 1',
+      key: "1",
+      name: "Policy 1",
       active: true,
-      sources: '192.168.1.1',
-      direction: 'Inbound',
-      destinations: '192.168.2.1',
-      protocol: 'TCP',
-      ports: '80',
-      posture: 'Allow'
+      sources: "192.168.1.1",
+      direction: "Inbound",
+      destinations: "192.168.2.1",
+      protocol: "TCP",
+      ports: "80",
+      posture: "Allow",
     },
     {
-      key: '2',
-      name: 'Policy 2',
+      key: "2",
+      name: "Policy 2",
       active: false,
-      sources: '192.168.1.2',
-      direction: 'Outbound',
-      destinations: '192.168.3.1',
-      protocol: 'UDP',
-      ports: '443',
-      posture: 'Deny'
+      sources: "192.168.1.2",
+      direction: "Outbound",
+      destinations: "192.168.3.1",
+      protocol: "UDP",
+      ports: "443",
+      posture: "Deny",
     },
   ]);
 
@@ -44,52 +43,43 @@ const Policy: React.FC = () => {
   const [editDrawerVisible, setEditDrawerVisible] = useState(false);
   const [deleteDrawerVisible, setDeleteDrawerVisible] = useState(false);
 
-  // Search Handler
-  // const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearchQuery(e.target.value);
-  // };
 
-  // Open the Delete Drawer
   const handleDeletePolicy = (policy: any) => {
     setSelectedPolicy(policy);
     setDeleteDrawerVisible(true);
   };
 
-  // Open the Edit Drawer
   const handleEditPolicy = (policy: any) => {
     setSelectedPolicy(policy);
     setEditDrawerVisible(true);
   };
 
-  // Open the Add Policy Drawer (this sets the selectedPolicy to null)
-  const handleAddPolicy = () => {
-    setSelectedPolicy(null); // No policy selected (i.e., it's a new policy)
-    setEditDrawerVisible(true);
-  };
-
-  // Add/Edit Policy Drawer
   const handleSavePolicy = (policy: any) => {
     if (selectedPolicy) {
-      // Update existing policy
       setPolicies((prevPolicies) =>
         prevPolicies.map((p) => (p.key === selectedPolicy.key ? policy : p))
       );
     } else {
-      // Create new policy
-      setPolicies((prevPolicies) => [...prevPolicies, { ...policy, key: Date.now().toString() }]);
+      setPolicies((prevPolicies) => [
+        ...prevPolicies,
+        { ...policy, key: Date.now().toString() },
+      ]);
     }
-    setEditDrawerVisible(false); // Close drawer after saving
+    setEditDrawerVisible(false);
   };
 
   return (
     <Layout className="min-h-screen bg-gray-900">
-      <Header className="bg-blue-800 text-white p-6">
-        <Title level={3} className="text-white text-center">Access Control Policies</Title>
+      <Header className=" text-white ">
+        <Title level={3} className="text-gray-300  bg-gray-900 text-center ">
+          Access Control Policies
+        </Title>
       </Header>
 
       <Content className="p-8 space-y-8">
-        <Paragraph className="text-lg text-gray-400">
-          Create rules to manage access in your network and define what peers can connect. Learn more about Access Control on our documentation.
+        <Paragraph className="text-lg text-gray-400 text-center">
+          Create rules to manage access in your network and define what peers
+          can connect. Learn more about Access Control on our documentation.
         </Paragraph>
 
         <SearchFilter
@@ -101,8 +91,8 @@ const Policy: React.FC = () => {
           setShowInactive={setShowInactive}
           showTenRows={showTenRows}
           setShowTenRows={setShowTenRows}
+          setEditDrawerVisible={setEditDrawerVisible}
         />
-
         <PolicyTable
           policies={policies}
           searchQuery={searchQuery}
@@ -115,14 +105,14 @@ const Policy: React.FC = () => {
           selectedPolicy={selectedPolicy}
           editDrawerVisible={editDrawerVisible}
           setEditDrawerVisible={setEditDrawerVisible}
-          setPolicies={handleSavePolicy}  // Pass the save handler to PolicyDrawer
+          setPolicies={handleSavePolicy}
         />
 
         <DeleteDrawer
           selectedPolicy={selectedPolicy}
           deleteDrawerVisible={deleteDrawerVisible}
           setDeleteDrawerVisible={setDeleteDrawerVisible}
-          setPolicies={(newPolicies) => setPolicies(newPolicies)} // Use the setPolicies to update state after delete
+          setPolicies={(newPolicies) => setPolicies(newPolicies)}
         />
       </Content>
     </Layout>

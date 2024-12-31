@@ -5,6 +5,7 @@ import Header from './header';
 import Sidebar from './sidebar';
 import Access from './access';
 import PeersPage from '../../../pages/vpn/peerspage';
+import Policy from '../../../api/Global/dashboard/policy/policy';
 
 
 const Lay: React.FC = () => {
@@ -16,6 +17,9 @@ const Lay: React.FC = () => {
         return <PeersPage />;
       case 'AccessControl':
         return <Access />;
+        case 'policy':
+        return <Policy />;
+
       default:
         return <div>Select a tab</div>;
     }

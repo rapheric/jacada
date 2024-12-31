@@ -1,5 +1,5 @@
 import React from "react";
-import { FiArrowUpCircle, FiSearch } from "react-icons/fi";
+import { FiArrowUpCircle} from "react-icons/fi";
 import { FaApple, FaLinux, FaWindows, FaLocationArrow } from "react-icons/fa";
 import Filters from "./filters";
 import SearchBar from "./searchBar";
@@ -53,10 +53,9 @@ const PeersPage: React.FC = () => {
     <div className="p-4 max-w-7xl mx-auto bg-gray-800 w-full text-white mt-32 dark:bg-gray-900">
       <div className="flex flex-col sm:flex-row sm:justify-between gap-2 items-center mb-6">
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <FiSearch size={18} className="text-gray-400" />
           <SearchBar placeholder="Search by name, IP, owner or group..." />
         </div>
-        <Filters options={["Online", "10 rows per page", "All Groups", "Rewind"]} />
+        <Filters options={["Online", "10 rows per page", "All Groups", ""]} />
       </div>
 
       <table className="w-full table-auto border-collapse bg-gray-800 text-slate-200">

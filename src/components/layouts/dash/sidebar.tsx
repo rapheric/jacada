@@ -9,7 +9,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
   return (
     <div className="w-64 bg-gray-800 p-4 space-y-6">
-      <h1 className="text-xl font-bold">NetBird</h1>
+      <h1 className="text-xl font-bold">Jacada</h1>
       <button
         className="flex items-center w-full px-4 py-2 hover:bg-gray-700"
         onClick={() => setActiveTab('Peers')}
@@ -21,6 +21,12 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
         onClick={() => setActiveTab('AccessControl')}
       >
         <AiOutlineSetting className="mr-2" /> Access Control
+      </button>
+      <button
+        className="flex items-center w-full px-4 py-2 hover:bg-gray-700"
+        onClick={() => setActiveTab('policy')}
+      >
+        <AiOutlineSetting className="mr-2" /> Policy
       </button>
     </div>
   );

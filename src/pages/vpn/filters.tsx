@@ -1,5 +1,5 @@
 import React from "react";
-import { FiArrowUpCircle } from "react-icons/fi";
+// import { FiArrowUpCircle } from "react-icons/fi";
 import { RiExpandUpDownLine } from "react-icons/ri";
 
 interface FiltersProps {
