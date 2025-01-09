@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaHome, FaCog, FaServer, FaList, FaLock, FaUser, FaQuestionCircle } from "react-icons/fa";
+import { FaServer, FaList} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import ThemeSwitcher from "../glo/themeswitcher/themeSwiter";
 
@@ -15,13 +15,10 @@ const AdminSidebar: React.FC<SidebarProps> = ({
   setIsSidebarOpen,
 }) => {
   const menuItems = [
-    { name: "Dashboard Overview", icon: <FaHome /> },
-    { name: "Connection Settings", icon: <FaCog /> },
-    { name: "Server Selection", icon: <FaServer /> },
-    { name: "Activity & Logs", icon: <FaList /> },
-    { name: "Security & Privacy", icon: <FaLock /> },
-    { name: "Account & Subscription", icon: <FaUser /> },
-    { name: "Help & Support", icon: <FaQuestionCircle /> },
+    { name: "Setup keys", icon: <FaList /> },
+    { name: "Peers", icon: <FaServer /> },
+    { name: "Policy", icon: <FaList /> },
+    { name: "activity logs", icon: <FaList /> },
   ];
 
   const [activeItem, setActive] = useState<string>("Dashboard Overview");
@@ -45,7 +42,6 @@ const AdminSidebar: React.FC<SidebarProps> = ({
         isSidebarOpen ? "block" : "hidden"
       } lg:block w-64 bg-gray-900 dark:bg-black text-white dark:text-gray-200 h-screen fixed top-0 left-0 z-30 transition-transform duration-300 ease-in-out`}
     >
-      {/* Logo */}
       <div className="p-5 flex items-center justify-center">
         <img
           alt="Company Logo"

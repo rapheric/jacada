@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Layout, Typography } from "antd";
 import DeleteDrawer from "./DeleteDrawer";
@@ -6,8 +5,8 @@ import PolicyDrawer from "./PolicyDrawer";
 import PolicyTable from "./PolicyTable";
 import SearchFilter from "./SearchFilter";
 
-const { Header, Content } = Layout;
-const { Title, Paragraph } = Typography;
+const { Content } = Layout;
+const { Paragraph } = Typography;
 
 const Policy: React.FC = () => {
   const [policies, setPolicies] = useState([
@@ -43,7 +42,6 @@ const Policy: React.FC = () => {
   const [editDrawerVisible, setEditDrawerVisible] = useState(false);
   const [deleteDrawerVisible, setDeleteDrawerVisible] = useState(false);
 
-
   const handleDeletePolicy = (policy: any) => {
     setSelectedPolicy(policy);
     setDeleteDrawerVisible(true);
@@ -69,15 +67,15 @@ const Policy: React.FC = () => {
   };
 
   return (
-    <Layout className="min-h-screen bg-gray-900">
-      <Header className=" text-white ">
-        <Title level={3} className="text-gray-300  bg-gray-900 text-center ">
+    <Layout className="min-h-screen bg-white dark:bg-gray-900">
+      <div>
+        <h1 className=" pl-10 text-lefttext-gray-700 dark:text-slate-200 text-2xl mt-20">
           Access Control Policies
-        </Title>
-      </Header>
+        </h1>
+      </div>
 
-      <Content className="p-8 space-y-8">
-        <Paragraph className="text-lg text-gray-400 text-center">
+      <Content className="p-10 space-y-8">
+        <Paragraph className="text-lg text-gray-700 dark:text-slate-200  text-left">
           Create rules to manage access in your network and define what peers
           can connect. Learn more about Access Control on our documentation.
         </Paragraph>
@@ -99,6 +97,7 @@ const Policy: React.FC = () => {
           showTenRows={showTenRows}
           handleEditPolicy={handleEditPolicy}
           handleDeletePolicy={handleDeletePolicy}
+          isDarkMode={true}
         />
 
         <PolicyDrawer

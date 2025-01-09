@@ -1,4 +1,4 @@
-
+import React from "react";
 
 interface Policy {
   key: string;
@@ -18,6 +18,7 @@ interface Props {
   showTenRows: boolean;
   handleEditPolicy: (policy: Policy) => void;
   handleDeletePolicy: (policy: Policy) => void;
+  isDarkMode: boolean;
 }
 
 const PolicyTable: React.FC<Props> = ({
@@ -26,6 +27,7 @@ const PolicyTable: React.FC<Props> = ({
   showTenRows,
   handleEditPolicy,
   handleDeletePolicy,
+  isDarkMode,
 }) => {
   const filteredPolicies = policies.filter((policy) =>
     policy.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -34,58 +36,70 @@ const PolicyTable: React.FC<Props> = ({
   const paginatedPolicies = showTenRows ? filteredPolicies.slice(0, 10) : filteredPolicies;
 
   return (
-    <div className="overflow-x-auto bg-gray-900 rounded-lg p-4">
-      <table className="min-w-full bg-gray-900 text-white">
-        <thead>
-          <tr>
-            <th className="p-2 text-left">Name</th>
-            <th className="p-2 text-left">Active</th>
-            <th className="p-2 text-left">Sources</th>
-            <th className="p-2 text-left">Direction</th>
-            <th className="p-2 text-left">Destinations</th>
-            <th className="p-2 text-left">Protocol</th>
-            <th className="p-2 text-left">Ports</th>
-            <th className="p-2 text-left">Posture Choices</th>
-            <th className="p-2 text-left">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedPolicies.map((policy) => (
-            <tr key={policy.key} className="border-t border-gray-600">
-              <td className="p-3">{policy.name}</td>
-              <td className="p-2">
-                <span className={policy.active ? "text-green-400" : "text-red-500"}>
-                  {policy.active ? "Yes" : "No"}
-                </span>
-              </td>
-              <td className="p-2">{policy.sources}</td>
-              <td className="p-2">{policy.direction === "Inbound" ? "← Inbound" : "→ Outbound"}</td>
-              <td className="p-2">{policy.destinations}</td>
-              <td className="p-2">{policy.protocol}</td>
-              <td className="p-2">{policy.ports}</td>
-              <td className="p-2">{policy.posture}</td>
-              <td className="p-2 flex space-x-2">
-                <button
-                  className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-500"
-                  onClick={() => handleEditPolicy(policy)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500"
-                  onClick={() => handleDeletePolicy(policy)}
-                >
-                  Delete
-                </button>
-              </td>
+    <div
+      className="p-4 rounded-lg 
+         dark:bg-gray-900 dark:text-slate-200 bg-white text-gray-700"
+    >
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse table-auto text-sm">
+          <thead>
+            <tr>
+              <th className="border-b p-2 text-left">Name</th>
+              <th className="border-b p-2 text-left">Active</th>
+              <th className="border-b p-2 text-left hidden md:table-cell">Sources</th>
+              <th className="border-b p-2 text-left">Direction</th>
+              <th className="border-b p-2 text-left hidden lg:table-cell">Destinations</th>
+              <th className="border-b p-2 text-left hidden md:table-cell">Protocol</th>
+              <th className="border-b p-2 text-left hidden lg:table-cell">Ports</th>
+              <th className="border-b p-2 text-left hidden lg:table-cell">Posture</th>
+              <th className="border-b p-2 text-left">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {paginatedPolicies.map((policy) => (
+              <tr key={policy.key} className="">
+                <td className="border-b p-2">{policy.name}</td>
+                <td className="border-b p-2">
+                  <span
+                    className={`inline-block w-4 h-4 rounded-full ${
+                      policy.active ? "bg-green-500" : "bg-red-500"
+                    }`}
+                  ></span>
+                </td>
+                <td className="border-b p-2 hidden md:table-cell">{policy.sources}</td>
+                <td className="border-b p-2">{policy.direction === "Inbound" ? "← Inbound" : "→ Outbound"}</td>
+                <td className="border-b p-2 hidden lg:table-cell">{policy.destinations}</td>
+                <td className="border-b p-2 hidden md:table-cell">{policy.protocol}</td>
+                <td className="border-b p-2 hidden lg:table-cell">{policy.ports}</td>
+                <td className="border-b p-2 hidden lg:table-cell">{policy.posture}</td>
+                <td className="border-b p-2">
+                  <div className="flex space-x-2">
+                    <button
+                      className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      onClick={() => handleEditPolicy(policy)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                      onClick={() => handleDeletePolicy(policy)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       {showTenRows && filteredPolicies.length > 10 && (
         <div className="flex justify-center mt-4">
           <button
-            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-500"
+            className={`${
+              isDarkMode ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"
+            } text-sm font-medium px-4 py-2 rounded-md`}
             onClick={() => alert("Show more functionality can be added")}
           >
             Show More

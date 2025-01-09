@@ -1,6 +1,5 @@
 import ThemeSwitcher from "../glo/themeswitcher/themeSwiter";
 import ProfileDropdown from "../layouts/profileDropDown";
-// import { useNavigate } from 'react-router-dom';
 interface AdminNavbarProps {
   onMenuToggle: () => void;
 }

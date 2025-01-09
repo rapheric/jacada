@@ -32,8 +32,8 @@ const FooterSection: React.FC<FooterSectionProps> = ({ title, items }) => (
 
 const Footer: React.FC = () => {
   return (
-    <div className="w-screen bg-gray-800">
-      <footer className="bg-gray-800 text-gray-300 py-12 px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="w-screen bg-gray-900">
+      <footer className=" text-gray-300 py-12 px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {vpnFooterData.sections.map((section, index) => (
             <FooterSection

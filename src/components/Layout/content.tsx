@@ -1,11 +1,9 @@
 
-import AccountSubscription from "../dash/accountSubscription";
+import Policy from "../../api/Global/dashboard/policy/policy";
+import SetupKeysPage from "../../pages/key/setupKey";
+import Peer from "../../pages/peer/peers";
+
 import ActivityLogs from "../dash/activityLogs";
-import ConnectionSettings from "../dash/connectionSettings";
-import DashboardOverview from "../dash/dashboard";
-import HelpSupport from "../dash/helpSupport";
-import SecurityPrivacy from "../dash/securityPrivacy";
-import ServerSelection from "../dash/serverSelection";
 
 
 interface ContentProps {
@@ -15,26 +13,20 @@ interface ContentProps {
 const UserContent: React.FC<ContentProps> = ({ activeItem }) => {
   const renderContent = () => {
     switch (activeItem) {
-      case 'Dashboard Overview':
-        return <DashboardOverview/>;
-      case 'Server Selection':
-        return <ServerSelection/>;
-      case 'Connection Settings':
-        return <ConnectionSettings/>;
-      case 'Activity & Logs':
+      case 'setupkeey':
+        return <SetupKeysPage/>;
+        case 'activity logs':
         return <ActivityLogs/>;
-      case 'Security & Privacy':
-        return <SecurityPrivacy/>;
-      case 'Account & Subscription':
-        return <AccountSubscription/>;
-      case 'Help & Support':
-        return <HelpSupport/>;
+      case 'Peers':
+        return <Peer/>;
+      case 'Policy':
+        return <Policy/>;
       default:
-        return <DashboardOverview/>;
+        return <SetupKeysPage/>;
     }
   };
 
-  return <main className="flex-1 p-6">{renderContent()}</main>;
+  return <main className="flex-1">{renderContent()}</main>;
 };
 
 export default UserContent;

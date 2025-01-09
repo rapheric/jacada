@@ -39,7 +39,7 @@ const  Navbar: React.FC = () => {
               <img
                 alt="Company Logo"
                 src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
+                className="h-8 w-auto text-green-500"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
