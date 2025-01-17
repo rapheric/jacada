@@ -81,6 +81,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         >
           Expired
         </button>
+        <div className="rounded-md shadow-md bg-gray-500 text-slate-100 dark:bg-gray-800 p-2">Refresh</div>
       </div>
       <select
         onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
@@ -90,6 +91,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         <option value={7}>7 rows per page</option>
         <option value={10}>10 rows per page</option>
       </select>
+      
     </div>
   );
 };

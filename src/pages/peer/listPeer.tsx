@@ -1,20 +1,32 @@
 import { useState } from "react";
-import { FiSearch, FiMoreHorizontal, FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { Popconfirm } from "antd";
 
-const PeerTable = ({ peers, onEdit }: { peers: any[]; onEdit: (id: number) => void }) => {
+import {
+  FiSearch,
+  FiMoreHorizontal,
+  FiArrowLeft,
+  FiArrowRight,
+} from "react-icons/fi";
+
+const PeerTable = ({
+  peers,
+  onEdit,
+}: {
+  peers: any[];
+  onEdit: (id: number) => void;
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<"online" | "all">("all");
   const [groupFilter, setGroupFilter] = useState("All Groups");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-
   const filteredPeers = peers
     .filter((peer) => {
       if (filter === "online") {
         return peer.lastSeen.toLowerCase().includes("minute");
       }
-      return true; 
+      return true;
     })
     .filter((peer) => {
       if (groupFilter !== "All Groups") {
@@ -48,13 +60,17 @@ const PeerTable = ({ peers, onEdit }: { peers: any[]; onEdit: (id: number) => vo
         </div>
         <div className="flex flex-wrap items-center space-x-2">
           <button
-            className={`px-4 py-2 rounded-md text-slate-200 ${filter === "online" ? "bg-gray-500" : "bg-gray-700"}`}
+            className={`px-4 py-2 rounded-md text-slate-200 ${
+              filter === "online" ? "bg-gray-500" : "bg-gray-700"
+            }`}
             onClick={() => setFilter("online")}
           >
             Online
           </button>
           <button
-            className={`px-4 py-2 rounded-md text-slate-200 ${filter === "all" ? "bg-gray-500" : "bg-gray-700"}`}
+            className={`px-4 py-2 rounded-md text-slate-200 ${
+              filter === "all" ? "bg-gray-500" : "bg-gray-700"
+            }`}
             onClick={() => setFilter("all")}
           >
             All
@@ -66,7 +82,9 @@ const PeerTable = ({ peers, onEdit }: { peers: any[]; onEdit: (id: number) => vo
             10 rows per page
           </button>
           <button
-            className={`px-4 py-2 rounded-md text-slate-200 ${groupFilter === "All Groups" ? "bg-gray-500" : "bg-gray-700"}`}
+            className={`px-4 py-2 rounded-md text-slate-200 ${
+              groupFilter === "All Groups" ? "bg-gray-500" : "bg-gray-700"
+            }`}
             onClick={() => setGroupFilter("All Groups")}
           >
             All Groups
@@ -91,12 +109,17 @@ const PeerTable = ({ peers, onEdit }: { peers: any[]; onEdit: (id: number) => vo
           {paginatedPeers.map((peer) => (
             <tr key={peer.id} className="border-t border-gray-300 table-auto">
               <td className="py-2">{peer.name}</td>
-              <td  className="py-2"> 
-                {peer.ip}
-              </td>
+              <td className="py-2">{peer.ip}</td>
               <td>{peer.address}</td>
               <td>
-                <button className="px-2 py-1 bg-white dark:bg-gray-700 rounded-md">{peer.group}</button>
+                <Popconfirm
+                  description="All groups which are more than ten minutes will be termed as expired"
+                  showCancel={false}
+                >
+                  <button className="px-2 py-1 bg-white dark:bg-gray-700 rounded-md">
+                    {peer.group}
+                  </button>
+                </Popconfirm>
               </td>
               <td>{peer.lastSeen}</td>
               <td>
@@ -126,18 +149,23 @@ const PeerTable = ({ peers, onEdit }: { peers: any[]; onEdit: (id: number) => vo
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-             <FiArrowLeft size={24} />
+            <FiArrowLeft size={24} />
           </button>
           <button
             className="px-2 py-1 rounded-md"
-            disabled={currentPage === Math.ceil(filteredPeers.length / rowsPerPage)}
+            disabled={
+              currentPage === Math.ceil(filteredPeers.length / rowsPerPage)
+            }
             onClick={() =>
               setCurrentPage((prev) =>
-                Math.min(prev + 1, Math.ceil(filteredPeers.length / rowsPerPage))
+                Math.min(
+                  prev + 1,
+                  Math.ceil(filteredPeers.length / rowsPerPage)
+                )
               )
             }
           >
-           <FiArrowRight size={24}  />
+            <FiArrowRight size={24} />
           </button>
         </div>
       </div>

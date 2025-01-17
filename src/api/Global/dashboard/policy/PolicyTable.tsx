@@ -1,4 +1,5 @@
-import React from "react";
+import { Button, Popconfirm } from "antd";
+import React, { useState } from "react";
 
 interface Policy {
   key: string;
@@ -33,7 +34,30 @@ const PolicyTable: React.FC<Props> = ({
     policy.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const paginatedPolicies = showTenRows ? filteredPolicies.slice(0, 10) : filteredPolicies;
+  const paginatedPolicies = showTenRows
+    ? filteredPolicies.slice(0, 10)
+    : filteredPolicies;
+
+  const [open, setPopOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  const showPopconfirm = () => {
+    setPopOpen(true);
+  };
+
+  const handleOk = () => {
+    setConfirmLoading(true);
+
+    setTimeout(() => {
+      setPopOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setPopOpen(false);
+  };
 
   return (
     <div
@@ -46,12 +70,22 @@ const PolicyTable: React.FC<Props> = ({
             <tr>
               <th className="border-b p-2 text-left">Name</th>
               <th className="border-b p-2 text-left">Active</th>
-              <th className="border-b p-2 text-left hidden md:table-cell">Sources</th>
+              <th className="border-b p-2 text-left hidden md:table-cell">
+                Sources
+              </th>
               <th className="border-b p-2 text-left">Direction</th>
-              <th className="border-b p-2 text-left hidden lg:table-cell">Destinations</th>
-              <th className="border-b p-2 text-left hidden md:table-cell">Protocol</th>
-              <th className="border-b p-2 text-left hidden lg:table-cell">Ports</th>
-              <th className="border-b p-2 text-left hidden lg:table-cell">Posture</th>
+              <th className="border-b p-2 text-left hidden lg:table-cell">
+                Destinations
+              </th>
+              <th className="border-b p-2 text-left hidden md:table-cell">
+                Protocol
+              </th>
+              <th className="border-b p-2 text-left hidden lg:table-cell">
+                Ports
+              </th>
+              <th className="border-b p-2 text-left hidden lg:table-cell">
+                Posture
+              </th>
               <th className="border-b p-2 text-left">Actions</th>
             </tr>
           </thead>
@@ -66,12 +100,24 @@ const PolicyTable: React.FC<Props> = ({
                     }`}
                   ></span>
                 </td>
-                <td className="border-b p-2 hidden md:table-cell">{policy.sources}</td>
-                <td className="border-b p-2">{policy.direction === "Inbound" ? "← Inbound" : "→ Outbound"}</td>
-                <td className="border-b p-2 hidden lg:table-cell">{policy.destinations}</td>
-                <td className="border-b p-2 hidden md:table-cell">{policy.protocol}</td>
-                <td className="border-b p-2 hidden lg:table-cell">{policy.ports}</td>
-                <td className="border-b p-2 hidden lg:table-cell">{policy.posture}</td>
+                <td className="border-b p-2 hidden md:table-cell">
+                  {policy.sources}
+                </td>
+                <td className="border-b p-2">
+                  {policy.direction === "Inbound" ? "← Inbound" : "→ Outbound"}
+                </td>
+                <td className="border-b p-2 hidden lg:table-cell">
+                  {policy.destinations}
+                </td>
+                <td className="border-b p-2 hidden md:table-cell">
+                  {policy.protocol}
+                </td>
+                <td className="border-b p-2 hidden lg:table-cell">
+                  {policy.ports}
+                </td>
+                <td className="border-b p-2 hidden lg:table-cell">
+                  {policy.posture}
+                </td>
                 <td className="border-b p-2">
                   <div className="flex space-x-2">
                     <button
@@ -86,6 +132,18 @@ const PolicyTable: React.FC<Props> = ({
                     >
                       Delete
                     </button>
+                    <Popconfirm
+                      // title="Title"
+                      description="All groups which have more than one minute will be set to expired"
+                      open={open}
+                      onConfirm={handleOk}
+                      okButtonProps={{ loading: confirmLoading }}
+                      onCancel={handleCancel}
+                    >
+                      <Button type="primary" onClick={showPopconfirm}>
+                        pop up
+                      </Button>
+                    </Popconfirm>
                   </div>
                 </td>
               </tr>
@@ -98,7 +156,9 @@ const PolicyTable: React.FC<Props> = ({
         <div className="flex justify-center mt-4">
           <button
             className={`${
-              isDarkMode ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"
+              isDarkMode
+                ? "bg-gray-700 hover:bg-gray-600"
+                : "bg-gray-200 hover:bg-gray-300"
             } text-sm font-medium px-4 py-2 rounded-md`}
             onClick={() => alert("Show more functionality can be added")}
           >

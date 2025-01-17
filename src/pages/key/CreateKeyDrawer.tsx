@@ -1,249 +1,155 @@
-
-// import React, { useState } from "react";
-
-// interface CreateKeyDrawerProps {
-//   onClose: () => void;
-//   onCreate: (newKey: any) => void;
-// }
-
-// const CreateKeyDrawer: React.FC<CreateKeyDrawerProps> = ({ onClose, onCreate }) => {
-//   const [name, setName] = useState<string>("");
-//   const [usageLimit, setUsageLimit] = useState<number>(1);
-//   const [expiresIn, setExpiresIn] = useState<number>(7);
-//   const [isReusable, setIsReusable] = useState<boolean>(false);
-//   const [isEphemeral, setIsEphemeral] = useState<boolean>(false);
-//   const [group, setGroup] = useState<string>("");
-
-//   const handleSubmit = () => {
-//     const newKey = {
-//       name,
-//       key: "NEW_KEY_****",
-//       usage: `0 of ${usageLimit} Peers`,
-//       group,
-//       ephemeral: isEphemeral,
-//       expires: `Expires in ${expiresIn} days`,
-//       valid: true,
-//     };
-
-//     onCreate(newKey);
-//   };
-
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-//       <div className="bg-gray-800 text-white rounded-lg p-6 w-full max-w-md">
-//         <h2 className="text-lg font-bold mb-4">Create New Setup Key</h2>
-//         <div className="space-y-4">
-//           <div>
-//             <label className="block text-sm">Name</label>
-//             <input
-//               type="text"
-//               className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
-//               value={name}
-//               onChange={(e) => setName(e.target.value)}
-//             />
-//           </div>
-//           <div>
-//             <label className="block text-sm">Usage Limit</label>
-//             <input
-//               type="number"
-//               className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
-//               value={usageLimit}
-//               onChange={(e) => setUsageLimit(parseInt(e.target.value, 10))}
-//             />
-//           </div>
-//           <div>
-//             <label className="block text-sm">Expires In (Days)</label>
-//             <input
-//               type="number"
-//               className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
-//               value={expiresIn}
-//               onChange={(e) => setExpiresIn(parseInt(e.target.value, 10))}
-//             />
-//           </div>
-//           <div>
-//             <label className="block text-sm">Group</label>
-//             <input
-//               type="text"
-//               className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
-//               value={group}
-//               onChange={(e) => setGroup(e.target.value)}
-//             />
-//           </div>
-//           <div>
-//             <label className="flex items-center space-x-2">
-//               <input
-//                 type="checkbox"
-//                 checked={isReusable}
-//                 onChange={(e) => setIsReusable(e.target.checked)}
-//                 className="text-orange-500"
-//               />
-//               <span>Make Key Reusable</span>
-//             </label>
-//           </div>
-//           <div>
-//             <label className="flex items-center space-x-2">
-//               <input
-//                 type="checkbox"
-//                 checked={isEphemeral}
-//                 onChange={(e) => setIsEphemeral(e.target.checked)}
-//                 className="text-orange-500"
-//               />
-//               <span>Ephemeral Peers</span>
-//             </label>
-//           </div>
-//         </div>
-//         <div className="mt-6 flex justify-end space-x-4">
-//           <button
-//             onClick={onClose}
-//             className="px-4 py-2 bg-gray-600 rounded-lg hover:bg-gray-500"
-//           >
-//             Cancel
-//           </button>
-//           <button
-//             onClick={handleSubmit}
-//             className="px-4 py-2 bg-orange-500 rounded-lg hover:bg-orange-400"
-//           >
-//             Create
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CreateKeyDrawer;
 import React, { useState } from "react";
+import { FiTrash, FiEdit } from "react-icons/fi";
 
-interface CreateKeyDrawerProps {
+interface DrawerProps {
+  isOpen: boolean;
   onClose: () => void;
-  onCreate: (newKey: any) => void;
 }
 
-const CreateKeyDrawer: React.FC<CreateKeyDrawerProps> = ({ onClose, onCreate }) => {
-  const [name, setName] = useState<string>("");
-  const [usageLimit, setUsageLimit] = useState<number>(1);
-  const [expiresIn, setExpiresIn] = useState<number>(7);
-  const [isReusable, setIsReusable] = useState<boolean>(false);
-  const [isEphemeral, setIsEphemeral] = useState<boolean>(false);
-  const [group, setGroup] = useState<string>("");
+const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose }) => {
+  const [isReusable, setIsReusable] = useState(true);
+  const [usageLimit, setUsageLimit] = useState<number | string>("Unlimited");
+  const [expiryDays, setExpiryDays] = useState<number | string>(7);
+  const [groups, setGroups] = useState<string[]>(["dddd", "dddddddd", "ssss"]);
 
-  const handleSubmit = () => {
-    const newKey = {
-      name,
-      key: "NEW_KEY_****",
-      usage: `0 of ${usageLimit} Peers`,
-      group,
-      ephemeral: isEphemeral,
-      expires: `Expires in ${expiresIn} days`,
-      valid: true,
-    };
-
-    onCreate(newKey);
-  };
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50">
-      {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50"
-        onClick={onClose} // Close drawer when clicking outside
-      ></div>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-end z-50">
+      <div className="bg-gray-800 text-white w-full max-w-md h-full p-6 overflow-y-auto">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Create New Setup Key</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-200 text-2xl"
+          >
+            &times;
+          </button>
+        </div>
+        <p className="text-sm text-gray-400 mb-6">
+          Use this key to register new machines in your network
+        </p>
 
-      {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-96 bg-gray-800 text-white shadow-lg transform transition-transform duration-300">
-        <div className="p-6 flex flex-col h-full">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-bold">Create New Setup Key</h2>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-200"
-            >
-              ✕
-            </button>
+        {/* Form */}
+        <form>
+          {/* Key Name */}
+          <label className="block mb-2 text-gray-300 text-sm">
+            Name
+            <input
+              type="text"
+              placeholder="e.g., AWS Servers"
+              className="block w-full mt-1 p-2 rounded bg-gray-700 text-white border border-gray-600"
+            />
+          </label>
+
+          {/* Reusable Key */}
+          <div className="flex items-center justify-between mb-4">
+            <label className="text-gray-300 text-sm">
+              Make this key reusable
+              <span className="block text-gray-400 text-xs">
+                Use this type to enroll multiple peers
+              </span>
+            </label>
+            <input
+              type="checkbox"
+              checked={isReusable}
+              onChange={() => setIsReusable(!isReusable)}
+              className="toggle-checkbox"
+            />
           </div>
 
-          {/* Content */}
-          <div className="space-y-4 flex-grow overflow-y-auto">
-            <div>
-              <label className="block text-sm">Name</label>
+          {/* Usage Limit */}
+          <label className="block mb-4">
+            <span className="block text-gray-300 text-sm mb-1">Usage limit</span>
+            <div className="flex items-center gap-2">
               <input
                 type="text"
-                className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm">Usage Limit</label>
-              <input
-                type="number"
-                className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
                 value={usageLimit}
-                onChange={(e) => setUsageLimit(parseInt(e.target.value, 10))}
+                onChange={(e) => setUsageLimit(e.target.value)}
+                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600"
               />
+              <span className="text-sm">Peer(s)</span>
             </div>
-            <div>
-              <label className="block text-sm">Expires In (Days)</label>
+          </label>
+
+          {/* Expiry Days */}
+          <label className="block mb-4">
+            <span className="block text-gray-300 text-sm mb-1">Expires in</span>
+            <div className="flex items-center gap-2">
               <input
                 type="number"
-                className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
-                value={expiresIn}
-                onChange={(e) => setExpiresIn(parseInt(e.target.value, 10))}
+                value={expiryDays}
+                onChange={(e) => setExpiryDays(Number(e.target.value))}
+                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600"
               />
+              <span className="text-sm">Day(s)</span>
             </div>
-            <div>
-              <label className="block text-sm">Group</label>
+          </label>
+
+          {/* Groups */}
+          <label className="block mb-4">
+            <span className="block text-gray-300 text-sm mb-1">
+              Search groups or add a new group
+            </span>
+            <div className="bg-gray-700 p-2 rounded">
+              {groups.map((group, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center mb-2"
+                >
+                  <span className="text-gray-200">{group}</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setGroups((prevGroups) =>
+                        prevGroups.filter((_, i) => i !== index)
+                      )
+                    }
+                    className="text-gray-400 hover:text-red-500"
+                  >
+                    <FiTrash />
+                  </button>
+                </div>
+              ))}
               <input
                 type="text"
-                className="w-full bg-gray-700 border border-gray-600 rounded-md p-2"
-                value={group}
-                onChange={(e) => setGroup(e.target.value)}
+                placeholder="Add group(s)..."
+                className="block w-full mt-2 p-2 rounded bg-gray-700 text-white border border-gray-600"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && e.currentTarget.value.trim() !== "") {
+                    setGroups((prevGroups) => [
+                      ...prevGroups,
+                      e.currentTarget.value.trim(),
+                    ]);
+                    e.currentTarget.value = "";
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
-            <div>
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={isReusable}
-                  onChange={(e) => setIsReusable(e.target.checked)}
-                  className="text-orange-500"
-                />
-                <span>Make Key Reusable</span>
-              </label>
-            </div>
-            <div>
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={isEphemeral}
-                  onChange={(e) => setIsEphemeral(e.target.checked)}
-                  className="text-orange-500"
-                />
-                <span>Ephemeral Peers</span>
-              </label>
-            </div>
-          </div>
+          </label>
 
           {/* Footer */}
-          <div className="mt-6 flex justify-end space-x-4">
+          <div className="flex justify-between mt-6">
             <button
+              type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-600 rounded-lg hover:bg-gray-500"
+              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white"
             >
               Cancel
             </button>
             <button
-              onClick={handleSubmit}
-              className="px-4 py-2 bg-orange-500 rounded-lg hover:bg-orange-400"
+              type="submit"
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded text-white"
             >
-              Create
+              Create Setup Key
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default CreateKeyDrawer;
+export default Drawer;

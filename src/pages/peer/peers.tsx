@@ -148,7 +148,7 @@ const Peer = () => {
   return (
     <div className="dark:bg-gray-900  bg-white dark:text-slate-200 text-gray-700 min-h-screen p-4">
       <div className="max-w-8xl mx-10 mt-16">
-        <Header onAdd={() => openDrawer("add")} />
+        <Header  />
         <PeerTable peers={peers} onEdit={(id) => openDrawer("edit", id)} />
         <Drawer
           isOpen={isDrawerOpen}

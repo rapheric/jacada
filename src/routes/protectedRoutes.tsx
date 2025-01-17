@@ -23,6 +23,9 @@ import Peer from "../pages/peer/peers";
 import HomePage from "../pages/home";
 import SetupKeysPage from "../pages/key/setupKey";
 import PlanDetails from "../api/Global/components/pricingDetails";
+import GroupModal from "../pages/key/groupModal";
+import GroupModalTwo from "../pages/key/groupmodal2";
+import OnlineModal from "../pages/key/onlineModal";
 
 const AppRoutes = () => (
   <Routes>
@@ -36,7 +39,9 @@ const AppRoutes = () => (
       <Route path="/pricing" element={<PricingUI />} />
       <Route path="/plan/:id" element={<PlanDetails />} />
       <Route path="/header" element={<Header />} />
-
+      <Route path="/group-modal" element={<GroupModal />} />
+      <Route path="/online-modal" element={<OnlineModal />} />
+      <Route path="/group-modal2" element={<GroupModalTwo />} />
       {/* <Route path="/dashh" element={<Dashboard />} /> */}
       <Route path="/plans-billing" element={<PlansAndBilling />} />
     </Route>

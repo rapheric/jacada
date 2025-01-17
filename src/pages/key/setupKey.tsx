@@ -3,7 +3,8 @@ import DeleteKeyDrawer from "./DeleteKeyDrawer";
 import EditKeyDrawer from "./EditKeyDrawer";
 import FilterBar from "./filter";
 import SetupKeysTable from "./SetupKeysTable";
-import CreateKeyDrawer from "./CreateKeyDrawer"; 
+// import CreateKeyDrawer from "./CreateKeyDrawer";
+import Drawer from "./CreateKeyDrawer";
 
 interface SetupKey {
   name: string;
@@ -59,7 +60,8 @@ const SetupKeysPage: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [editKey, setEditKey] = useState<SetupKey | null>(null);
   const [deleteKey, setDeleteKey] = useState<SetupKey | null>(null);
-  const [showCreateKeyDrawer, setShowCreateKeyDrawer] = useState<boolean>(false); 
+  // const [showCreateKeyDrawer, setShowCreateKeyDrawer] = useState<boolean>(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const handleSearch = (query: string) => {
     const filtered = allKeys.filter(
@@ -102,11 +104,11 @@ const SetupKeysPage: React.FC = () => {
     }
   };
 
-  const handleCreateKey = (newKey: SetupKey) => {
-    setAllKeys((prev) => [...prev, newKey]);
-    setFilteredKeys((prev) => [...prev, newKey]);
-    setShowCreateKeyDrawer(false); 
-  };
+  // const handleCreateKey = (newKey: SetupKey) => {
+  //   setAllKeys((prev) => [...prev, newKey]);
+  //   setFilteredKeys((prev) => [...prev, newKey]);
+  //   setShowCreateKeyDrawer(false);
+  // };
 
   return (
     <div className="bg-white dark:bg-gray-900 min-h-screen text-gray-700 dark:text-slate-200">
@@ -126,7 +128,8 @@ const SetupKeysPage: React.FC = () => {
         />
 
         <button
-          onClick={() => setShowCreateKeyDrawer(true)} 
+          // onClick={() => setShowCreateKeyDrawer(true)}
+          onClick={() => setDrawerOpen(true)}
           className="w-full sm:w-auto px-4 py-2 rounded-lg bg-blue-500 text-white mt-4 sm:mt-6"
         >
           Create Setup Key
@@ -140,13 +143,8 @@ const SetupKeysPage: React.FC = () => {
           />
         </div>
       </div>
-      {showCreateKeyDrawer && (
-        <CreateKeyDrawer
-          onClose={() => setShowCreateKeyDrawer(false)} 
-          onCreate={handleCreateKey} 
-        />
-      )}
 
+      <Drawer isOpen={isDrawerOpen} onClose={() => setDrawerOpen(false)} />
       {editKey && (
         <EditKeyDrawer
           keyData={editKey}

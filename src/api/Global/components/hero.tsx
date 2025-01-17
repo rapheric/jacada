@@ -40,7 +40,7 @@ const HeroSection: React.FC = () => {
           </div>
       </div>
 
-      <div className="lg:w-1/2 mt-12 lg:mt-0 flex justify-center items-center bg-yellow-400 ml-16">
+      <div className="lg:w-1/2 mt-12 lg:mt-0 flex justify-center items-center ml-16">
         <div className="w-full h-auto  rounded-md flex items-center justify-center shadow-lg">
           <img src="https://nordvpn.com/wp-content/uploads/blog-featured-vpn-vs-rdp.svg" alt="VPN avatar" />
         </div>
