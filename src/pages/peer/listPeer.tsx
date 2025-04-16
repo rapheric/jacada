@@ -100,15 +100,15 @@ const PeerTable = ({
             <th>IP</th>
             <th>Groups</th>
             <th>Last Seen</th>
-            <th>OS</th>
+            <th>OS</th> 
             <th>Version</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {paginatedPeers.map((peer) => (
-            <tr key={peer.id} className="border-t border-gray-300 table-auto">
-              <td className="py-2">{peer.name}</td>
+            <tr key={peer.id} className="border-t border-gray-300  table-auto">
+              <td className="py-2 ">{peer.name}</td>
               <td className="py-2">{peer.ip}</td>
               <td>{peer.address}</td>
               <td>
@@ -116,7 +116,7 @@ const PeerTable = ({
                   description="All groups which are more than ten minutes will be termed as expired"
                   showCancel={false}
                 >
-                  <button className="px-2 py-1 bg-white dark:bg-gray-700 rounded-md">
+                  <button className="px-2 py-1 my-3 bg-white dark:bg-gray-700 rounded-md">
                     {peer.group}
                   </button>
                 </Popconfirm>
